@@ -4,7 +4,9 @@ const cors = require('cors')
 require('dotenv').config();
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
-
+const connectDB = require('./db/db')
+connectDB();
+const userRoutes = require('./routes/user.routes')
 app.use(
   "/api-docs",
   swaggerUi.serve,
@@ -17,6 +19,8 @@ app.use(cors());
 app.get('/',(req,res)=>{
   res.send('Server is running...')
 })
+app.use('/user/',userRoutes);
+
 
 const port = process.env.PORT;
 app.listen(port,(req,res)=>{
